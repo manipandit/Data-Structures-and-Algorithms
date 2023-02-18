@@ -1,56 +1,34 @@
-class Solution{
-    public:
-    //arr1,arr2 : the arrays
-    // n, m: size of arrays
-    //Function to return a list containing the union of the two arrays. 
-    vector<int> findUnion(int arr1[], int arr2[], int n, int m)
+int findZeroes(int arr[], int n, int m) {
+    // code here
+
+    int flips = 0;
+    int ans = 0;
+
+    int i=0; // moving forward
+    int j=0; //for unflipping
+
+    while(i<n)
     {
-        //Your code here
-        //return vector with correct order of elements
-        
-        vector<int> ans;
-        
-        int i=0,j=0;
-        
-        while(i<n && j<m)
+        if(arr[i]==0)
         {
-            if(arr1[i] <= arr2[j])
-            {
-                if(ans.size()==0 || arr1[i] != ans.back())
-                {
-                    ans.push_back(arr1[i]);
-                }
-                i++;
-            }
-            
-            else 
-            {
-                if(ans.size()==0 || arr2[j] != ans.back())
-                {
-                    ans.push_back(arr2[j]);
-                }
-                j++;
-            }
+            flips++;
         }
-        
-        while(i<n)
+
+
+        while(flips > m)
         {
-            if(arr1[i] != ans.back())
+            if(arr[j]==0)
             {
-                ans.push_back(arr1[i]);
-            }
-            i++;
-        }
-        
-        while(j<m)
-        {
-            if(arr2[j] != ans.back())
-            {
-                ans.push_back(arr2[j]);
+                flips--;
             }
             j++;
         }
-        return ans;
-    }
-};
 
+
+        ans = max(ans, i-j+1);
+
+        i++;
+    }
+
+    return ans;
+}
